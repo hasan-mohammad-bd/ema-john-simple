@@ -15,3 +15,5 @@ function App() {
 }
 
 export default App;
+
+//in comment: npm run build , will create a file which have to deliver to netlify.

@@ -5,5 +5,12 @@
 .products-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 45px;
+    gap: 40px;
+    margin:100px 50px 100px
+}
+
+@media screen and (max-width: 700px) {
+    .products-container {
+     grid-template-columns: repeat(1, 1fr);
+    }
 }

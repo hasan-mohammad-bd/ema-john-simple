@@ -4,11 +4,19 @@ import "./Shop.css"
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
+    const [cart, setCart] = useState([])
     useEffect(()=>{
         fetch("products.json")
         .then(res => res.json())
         .then(data => setProducts(data))
     },[])
+
+    //event handler. (his is called state lifting)
+    const handleAddToCard = (product) =>{
+        console.log(product);
+        const newCart = [...cart,product];//highly important
+        setCart(newCart);
+    }
 
     return (
         <div className='shop-container'>
@@ -17,12 +25,16 @@ const Shop = () => {
                     products.map(product => <Product
                         key = {product.id}
                         product = {product}
+                        handleAddToCard ={handleAddToCard}
                     >
 
                     </Product>)
                 }
             </div>
-            <div className="cart-container">this is laa;ldfjasfhasf</div>
+            <div className="cart-container">
+                <h4>Order Summary</h4>
+                <p>Selected Items:{cart.length}</p>
+            </div>
         </div>
     );
 };
