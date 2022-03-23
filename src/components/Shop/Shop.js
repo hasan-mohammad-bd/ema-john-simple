@@ -17,13 +17,20 @@ const Shop = () => {
     //to show the cart info from local storage.
     useEffect(()=>{
         const storedCart = getStoredCart();
+        const savedCart = [];
         for(const id in storedCart){
             //finding the product according to the id.
             const addedProduct = products.find(product => product.id === id)
             //below here: when the added data will be truthy, the data will be loaded.
             if(addedProduct){
-                const quantity = storedCart[id]
+                //this ID is coming from loop.
+                const quantity = storedCart[id];
+                //there is a quantity inside the products object.
+                addedProduct.quantity = quantity;
+                savedCart.push(addedProduct);
             }
+
+            setCart(savedCart);
             
         }
         //dependency injection: this effect is dependent on products. 
@@ -31,11 +38,22 @@ const Shop = () => {
     },[products])
 
     //event handler. (this is called lift up the state)
-    const handleAddToCard = (product) =>{
-        console.log(product);
-        const newCart = [...cart,product];//highly important
+    const handleAddToCard = (selectedProduct) =>{
+        console.log(selectedProduct);
+        let newCart = [];
+        const exists = cart.find(product => product.id === selectedProduct.id);
+        if(!exists){
+            selectedProduct.quantity = 1;
+            newCart = [...cart,selectedProduct];
+        }
+        else {
+            const rest = cart.filter(product => product.id !== selectedProduct.id);
+            exists.quantity = exists.quantity + 1;
+            newCart = [...rest, exists]
+        }
+
         setCart(newCart);
-        addToDb(product.id)
+        addToDb(selectedProduct.id)
     }
 
     return (
