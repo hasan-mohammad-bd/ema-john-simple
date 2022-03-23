@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { addToDb, getStoredCart } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import "./Shop.css"
+
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
@@ -12,11 +14,28 @@ const Shop = () => {
         .then(data => setProducts(data))
     },[])
 
+    //to show the cart info from local storage.
+    useEffect(()=>{
+        const storedCart = getStoredCart();
+        for(const id in storedCart){
+            //finding the product according to the id.
+            const addedProduct = products.find(product => product.id === id)
+            //below here: when the added data will be truthy, the data will be loaded.
+            if(addedProduct){
+                const quantity = storedCart[id]
+            }
+            
+        }
+        //dependency injection: this effect is dependent on products. 
+        //here, one time the code will run without the value of the products then second time, when the product value will come, the useEffect will run again.
+    },[products])
+
     //event handler. (this is called lift up the state)
     const handleAddToCard = (product) =>{
         console.log(product);
         const newCart = [...cart,product];//highly important
         setCart(newCart);
+        addToDb(product.id)
     }
 
     return (
