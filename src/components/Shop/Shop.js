@@ -22,6 +22,7 @@ const Shop = () => {
             //finding the product according to the id.
             const addedProduct = products.find(product => product.id === id)
             //below here: when the added data will be truthy, the data will be loaded.
+            //when first time(without dependency) loaded, the addedProduct come up with undefined. 
             if(addedProduct){
                 //this ID is coming from loop.
                 const quantity = storedCart[id];
