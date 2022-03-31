@@ -26,6 +26,7 @@ const ReviewItem = (props) => {
         </div>
         <div className="delete-container">
           <button onClick={()=>handleRemoveProduct(product)} className="delete-button"><FontAwesomeIcon className="delete-icon" icon={faTrashAlt}></FontAwesomeIcon></button>
+          {props.children}
         </div>
       </div>
     </div>
